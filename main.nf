@@ -36,7 +36,6 @@ bai_files.into {bai_files_msisensor; bai_files_mantis}
 ***************/
 
 process run_mantis{
-    container 'dilmicperera/mantis_msisensor:latest'
     publishDir params.output_folder
 
     input:
@@ -59,7 +58,6 @@ process run_mantis{
 ** MSIsensor **
 ***************/
 process run_msisensor{
-    container 'dilmicperera/msisensor:0.5'
 
     publishDir params.output_folder
 
@@ -83,7 +81,6 @@ process run_msisensor{
 *********************/
 
 process combine_outputs{
-    container "dilmicperera/mantis_msisensor:latest"
     publishDir params.output_folder, mode: 'copy'
 
     input:
