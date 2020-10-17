@@ -28,10 +28,6 @@ if os.path.basename(msisensor_output_file).replace('.hardclipped.msisensor','') 
     output_file ['MSI status'] = np.where(((output_file['Score(MSIsensor)']>int(msisensor_score_threshold)) & (output_file['Score(MANTIS - DIF)']>float(mantis_score_threshold))), "MSI-H", "MSI-L/MSS")
 
 
-    #output_file_name = sample_name+'.msi_status.csv'
-    #pd.set_option("display.max_rows", None, "display.max_columns", None)
-
-    #print(output_file)
     output_file.to_csv(output_file_name, index=False)
 
 else : 
