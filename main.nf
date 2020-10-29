@@ -5,7 +5,7 @@ import java.nio.file.Paths
 //params.output_folder = '/data/dperera/outputs/test_docker'
 //params.bam_folder = '/data/dperera/from_s3/200817_M02558_0388_000000000-J6PKJ'
 
-bam_folder="$params.data_folder/$params.bam_folder"
+//bam_folder="$params.data_folder/$params.bam_folder"
 loci_file_msisensor = "$projectDir/$params.loci_file_msisensor"
 loci_file_mantis = file("$projectDir/$params.loci_file_mantis")
 
@@ -17,18 +17,28 @@ genome_fa_fai = file(params.genome_fa_fai)
 
 combine_outputs  =  "$projectDir/$params.combine_outputs"
 
+
+run_path = "${params.data_folder}/${params.bam_folder}"
+bam_files = "${params.run_path}/[NQD]*/*.primers.hardclipped.bam"
+bai_files = "${params.run_path}/[NQD]*/*.primers.hardclipped.bam.bai"
+
+
+
 // Read in bam files
-bam_paths = Paths.get(bam_folder,"/DNA*/DNA*[0-9].hardclipped.bam")
-bam_files = Channel.fromPath(bam_paths)
+//bam_paths = Paths.get(bam_folder,"/DNA*/DNA*[0-9].hardclipped.bam")
+//bam_files = Channel.fromPath(bam_paths)
 
 // Read in bai files
-bai_paths = Paths.get(bam_folder,"/DNA*/DNA*[0-9].hardclipped.bam.bai")
-bai_files = Channel.fromPath(bai_paths)
+//bai_paths = Paths.get(bam_folder,"/DNA*/DNA*[0-9].hardclipped.bam.bai")
+//bai_files = Channel.fromPath(bai_paths)
 
 
 // The bam and bai files are used by both callers, so we split the channel into two:
 bam_files.into {bam_files_msisensor; bam_files_mantis; bam_files_combine_outputs}
 bai_files.into {bai_files_msisensor; bai_files_mantis}
+
+
+
 
 
 /**************
