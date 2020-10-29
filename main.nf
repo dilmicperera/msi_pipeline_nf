@@ -80,19 +80,19 @@ process run_msisensor{
 ** Combine Outputs **
 *********************/
 
-process combine_outputs{
-    publishDir params.output_folder, mode: 'copy'
+//process combine_outputs{
+//    publishDir params.output_folder, mode: 'copy'
 
-    input:
-        path combine_outputs
-	file tumour_bam from bam_files_combine_outputs
-        file('*') from  msisensor_outputs.mix(mantis_outputs).collect()
-    output: 
-        path "${tumour_bam.baseName}.msi_status.csv"
+//    input:
+//        path combine_outputs
+//	file tumour_bam from bam_files_combine_outputs
+//        file('*') from  msisensor_outputs.mix(mantis_outputs).collect()
+//    output: 
+//        path "${tumour_bam.baseName}.msi_status.csv"
 
-    """
-    python $combine_outputs ${tumour_bam.baseName}.msisensor $params.msisensor_score_threshold ${tumour_bam.baseName}.mantis.status $params.mantis_score_threshold ${tumour_bam.baseName}.msi_status.csv
-    """
+//    """
+//    python $combine_outputs ${tumour_bam.baseName}.msisensor $params.msisensor_score_threshold ${tumour_bam.baseName}.mantis.status $params.mantis_score_threshold ${tumour_bam.baseName}.msi_status.csv
+//    """
 
-}
+//}
 
