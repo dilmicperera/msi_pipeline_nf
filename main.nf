@@ -22,14 +22,14 @@ combine_outputs  =  "$projectDir/$params.combine_outputs"
 ML_classifier  =  "$projectDir/$params.ML_classifier"
 
 // Read in bam/bai files
-//bam_files = Channel.fromPath("$bam_folder/DNA*/DNA*[0-9].hardclipped.bam")
-//bai_files = Channel.fromPath("$bam_folder/DNA*/DNA*[0-9].hardclipped.bam.bai")
+bam_files = Channel.fromPath("$bam_folder/DNA*/DNA*[0-9].hardclipped.bam")
+bai_files = Channel.fromPath("$bam_folder/DNA*/DNA*[0-9].hardclipped.bam.bai")
 
-bam_paths = Paths.get(bam_folder,"/DNA*/DNA*[0-9].hardclipped.bam")
-bam_files = Channel.fromPath(bam_paths)
+//bam_paths = Paths.get(bam_folder,"/DNA*/DNA*[0-9].hardclipped.bam")
+//bam_files = Channel.fromPath(bam_paths)
 
-bai_paths = Paths.get(bam_folder,"/DNA*/DNA*[0-9].hardclipped.bam.bai")
-bai_files = Channel.fromPath(bai_paths)
+//bai_paths = Paths.get(bam_folder,"/DNA*/DNA*[0-9].hardclipped.bam.bai")
+//bai_files = Channel.fromPath(bai_paths)
 
 
 //NF_bam_path = Paths.get(bam_folder,"/QMRS*/NF*[0-9].hardclipped.bam")
