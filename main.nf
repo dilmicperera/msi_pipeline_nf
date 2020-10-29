@@ -5,7 +5,7 @@ import java.nio.file.Paths
 //params.output_folder = '/data/dperera/outputs/test_docker'
 //params.bam_folder = '/data/dperera/from_s3/200817_M02558_0388_000000000-J6PKJ'
 
-bam_folder="$projectDir/$params.bam_folder"
+bam_folder="$params.bam_folder"
 loci_file_msisensor = "$projectDir/$params.loci_file_msisensor"
 loci_file_mantis = file("$projectDir/$params.loci_file_mantis")
 
