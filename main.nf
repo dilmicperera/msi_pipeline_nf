@@ -7,7 +7,7 @@ import java.nio.file.Paths
 
 bam_folder="$projectDir/$params.bam_folder"
 loci_file_msisensor = "$projectDir/$params.loci_file_msisensor"
-loci_file_mantis = file(params.loci_file_mantis)
+loci_file_mantis = file("$projectDir/$params.loci_file_mantis")
 
 normal_bam = "$projectDir/$params.normal_bam"
 normal_bai = "$projectDir/$params.normal_bai"
