@@ -18,13 +18,9 @@ genome_fa_fai = file(params.genome_fa_fai)
 combine_outputs  =  "$projectDir/$params.combine_outputs"
 
 
-// Read in bam files
-bam_paths = Paths.get(bam_folder,"/DNA*/DNA*[0-9].hardclipped.bam")
-bam_files = Channel.fromPath(bam_paths)
-
-// Read in bai files
-bai_paths = Paths.get(bam_folder,"/DNA*/DNA*[0-9].hardclipped.bam.bai")
-bai_files = Channel.fromPath(bai_paths)
+// Read in bam/bai files
+bam_files = Channel.fromPath("$bam_folder/DNA*/DNA*[0-9].hardclipped.bam")
+bai_files = Channel.fromPath("$bam_folder/DNA*/DNA*[0-9].hardclipped.bam.bai")
 
 
 // The bam and bai files are used by both callers, so we split the channel into two:
