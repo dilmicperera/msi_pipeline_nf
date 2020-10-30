@@ -58,7 +58,7 @@ bai_files.into {bai_files_msisensor; bai_files_mantis; bai_files_NF_msisensor; b
 /**************
 ** MANTIS **
 ***************/
-
+/*
 process run_mantis{
     publishDir params.output_folder
 
@@ -77,7 +77,7 @@ process run_mantis{
     python /opt/mantis/mantis.py --bedfile $loci_file_mantis --genome $genome_fa -n $pooled_normal_bam -t ${tumour_bam} -o ${tumour_bam.baseName}.mantis
     """
 }
-
+*/
 process run_mantis_NF{
     publishDir params.output_folder
 
@@ -101,6 +101,8 @@ process run_mantis_NF{
 /**************
 ** MSIsensor **
 ***************/
+
+/*
 process run_msisensor{
 
     publishDir params.output_folder
@@ -119,7 +121,7 @@ process run_msisensor{
     msisensor msi -d $loci_file_msisensor -n $pooled_normal_bam -t ${tumour_bam} -o ${tumour_bam.baseName}.msisensor
     """
 }
-
+*/
 
 process run_msisensor_NF{
 
@@ -165,7 +167,7 @@ process ML_classifier{
 /********************
 ** Combine Outputs **
 *********************/
-
+/*
 process combine_outputs{
     publishDir params.output_folder, mode: 'copy'
 
@@ -181,4 +183,4 @@ process combine_outputs{
     """
 
 }
-
+*/
