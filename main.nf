@@ -5,7 +5,7 @@ import java.nio.file.Paths
 //params.output_folder = '/data/dperera/outputs/test_docker'
 //params.bam_folder = '/data/dperera/from_s3/200817_M02558_0388_000000000-J6PKJ'
 
-bam_folder="$params.data_folder/$params.bam_folder"
+bam_folder="${params.data_folder}/${params.bam_folder}"
 loci_file_msisensor = "$projectDir/$params.loci_file_msisensor"
 loci_file_mantis = "$projectDir/$params.loci_file_mantis"
 
@@ -43,11 +43,11 @@ bai_files.into {bai_files_msisensor; bai_files_mantis; bai_files_NF_msisensor; b
 //NF_bam_files.into {NF_bam_files_msisensor; NF_bam_files_mantis}
 //NF_bai_files.into {NF_bai_files_msisensor; NF_bai_files_mantis}
 
-NF_bam_files_mantis = "${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam"
-NF_bai_files_mantis = "${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam.bai"
+NF_bam_files_mantis = file("${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam")
+NF_bai_files_mantis = file("$bam_folder/QMRS*/NF*[0-9].hardclipped.bam.bai")
 
-NF_bam_files_msisensor = "${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam"
-NF_bai_files_msisensor = "${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam.bai"
+NF_bam_files_msisensor = file("$bam_folder/QMRS*/NF*[0-9].hardclipped.bam")
+NF_bai_files_msisensor = file("$bam_folder/QMRS*/NF*[0-9].hardclipped.bam.bai")
 
 /**************
 ** MANTIS **
@@ -78,8 +78,8 @@ process run_mantis_NF{
     input:
         file tumour_bam from bam_files_NF_mantis
         file tumour_bai from bai_files_NF_mantis
-        path NF_bam_files_mantis
-        path NF_bai_files_mantis
+        file NF_bam_files_mantis
+        file NF_bai_files_mantis
         file genome_NF_fa
         file genome_NF_fa_fai
         path loci_file_mantis
@@ -124,8 +124,8 @@ process run_msisensor_NF{
     input:
         file tumour_bam from bam_files_NF_msisensor
         file tumour_bai from bai_files_NF_msisensor
-        path NF_bam_files_msisensor
-        path NF_bai_files_msisensor
+        file NF_bam_files_msisensor
+        file NF_bai_files_msisensor
         path loci_file_msisensor
     output:
         file "${tumour_bam.baseName}.NF_msisensor" into NF_msisensor_outputs
