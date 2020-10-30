@@ -38,10 +38,10 @@ bai_files = Channel.fromPath("$bam_folder/DNA*/DNA*[0-9].hardclipped.bam.bai")
 //NF_bai_path = Paths.get(bam_folder,"/QMRS*/NF*[0-9].hardclipped.bam.bai")
 //NF_normal_bai = file(NF_bai_path)
 
-NF_normal_bam = "/QMRS*/NF*[0-9].hardclipped.bam"
+NF_normal_bam = "QMRS*/NF*[0-9].hardclipped.bam"
 NF_bam_path = "$bam_folder/$NF_normal_bam"
 
-NF_normal_bai = "/QMRS*/NF*[0-9].hardclipped.bam.bai"
+NF_normal_bai = "QMRS*/NF*[0-9].hardclipped.bam.bai"
 NF_bai_path = "$bam_folder/$NF_normal_bai"
 
 
