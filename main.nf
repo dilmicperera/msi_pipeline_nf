@@ -49,13 +49,24 @@ NF_bai_files = file("${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam.bai")
 //NF_bam_files_msisensor = file("${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam")
 //NF_bai_files_msisensor = file("${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam.bai")
 
-NF_bam_files.copyTo('${projectDir}/NF_bam_file.bam')
-NF_bai_files.copyTo('${projectDir}/NF_bam_file.bam.bai')
+
 
 NF_bam_files_path = "${projectDir}/NF_bam_file.bam"
 NF_bai_files_path = "${projectDir}/NF_bam_file.bam.bai"
 
 
+
+process copy_NF{
+
+    input:
+        file NF_bam_files
+        file NF_bai_files
+
+    """
+    $NF_bam_files.copyTo(NF_bam_files_path)
+    $NF_bai_files.copyTo(NF_bai_files_path)
+    """
+}
 
 
 /**************
@@ -149,7 +160,7 @@ process run_msisensor_NF{
 ** ML_classifier **
 *********************/
 
-process ML_classifier{
+process combine{
     publishDir params.output_folder, mode: 'copy'
 
     input:
