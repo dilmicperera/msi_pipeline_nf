@@ -43,11 +43,11 @@ bai_files.into {bai_files_msisensor; bai_files_mantis; bai_files_NF_msisensor; b
 //NF_bam_files.into {NF_bam_files_msisensor; NF_bam_files_mantis}
 //NF_bai_files.into {NF_bai_files_msisensor; NF_bai_files_mantis}
 
-NF_bam_files_mantis = "$bam_folder/QMRS*/NF*[0-9].hardclipped.bam"
-NF_bai_files_mantis = "$bam_folder/QMRS*/NF*[0-9].hardclipped.bam.bai"
+NF_bam_files_mantis = "${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam"
+NF_bai_files_mantis = "${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam.bai"
 
-NF_bam_files_msisensor = "$bam_folder/QMRS*/NF*[0-9].hardclipped.bam"
-NF_bai_files_msisensor = "$bam_folder/QMRS*/NF*[0-9].hardclipped.bam.bai"
+NF_bam_files_msisensor = "${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam"
+NF_bai_files_msisensor = "${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam.bai"
 
 /**************
 ** MANTIS **
