@@ -37,17 +37,26 @@ bam_files.into {bam_files_msisensor; bam_files_mantis; bam_files_NF_msisensor; b
 bai_files.into {bai_files_msisensor; bai_files_mantis; bai_files_NF_msisensor; bai_files_NF_mantis}
 
 
-//NF_bam_files = Channel.fromPath("$bam_folder/QMRS*/NF*[0-9].hardclipped.bam")
-//NF_bai_files = Channel.fromPath("$bam_folder/QMRS*/NF*[0-9].hardclipped.bam.bai")
+NF_bam_files = file("${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam")
+NF_bai_files = file("${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam.bai")
 
 //NF_bam_files.into {NF_bam_files_msisensor; NF_bam_files_mantis}
 //NF_bai_files.into {NF_bai_files_msisensor; NF_bai_files_mantis}
 
-NF_bam_files_mantis = file("${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam")
-NF_bai_files_mantis = file("${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam.bai")
+//NF_bam_files_mantis = file("${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam")
+//NF_bai_files_mantis = file("${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam.bai")
 
-NF_bam_files_msisensor = file("${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam")
-NF_bai_files_msisensor = file("${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam.bai")
+//NF_bam_files_msisensor = file("${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam")
+//NF_bai_files_msisensor = file("${bam_folder}/QMRS*/NF*[0-9].hardclipped.bam.bai")
+
+NF_bam_files.copyTo('${projectDir}/NF_bam_file.bam')
+NF_bai_files.copyTo('${projectDir}/NF_bam_file.bam.bai')
+
+NF_bam_files_path = "${projectDir}/NF_bam_file.bam"
+NF_bai_files_path = "${projectDir}/NF_bam_file.bam.bai"
+
+
+
 
 /**************
 ** MANTIS **
@@ -78,8 +87,8 @@ process run_mantis_NF{
     input:
         file tumour_bam from bam_files_NF_mantis
         file tumour_bai from bai_files_NF_mantis
-        file NF_bam_files_mantis
-        file NF_bai_files_mantis
+        path NF_bam_files_path
+        path NF_bai_files_path
         file genome_NF_fa
         file genome_NF_fa_fai
         path loci_file_mantis
@@ -87,7 +96,7 @@ process run_mantis_NF{
         file "${tumour_bam.baseName}.NF_mantis.status" into NF_mantis_outputs
 
     """
-    python /opt/mantis/mantis.py --bedfile $loci_file_mantis --genome $genome_NF_fa -n $NF_bam_files_mantis -t ${tumour_bam} -o ${tumour_bam.baseName}.NF_mantis
+    python /opt/mantis/mantis.py --bedfile $loci_file_mantis --genome $genome_NF_fa -n $NF_bam_files_path -t ${tumour_bam} -o ${tumour_bam.baseName}.NF_mantis
     """
 }
 
@@ -124,15 +133,15 @@ process run_msisensor_NF{
     input:
         file tumour_bam from bam_files_NF_msisensor
         file tumour_bai from bai_files_NF_msisensor
-        file NF_bam_files_msisensor
-        file NF_bai_files_msisensor
+        path NF_bam_files_path
+        path NF_bai_files_path
         path loci_file_msisensor
     output:
         file "${tumour_bam.baseName}.NF_msisensor" into NF_msisensor_outputs
 
 
     """
-    msisensor msi -d $loci_file_msisensor -n $NF_bam_files_msisensor -t ${tumour_bam} -o ${tumour_bam.baseName}.NF_msisensor
+    msisensor msi -d $loci_file_msisensor -n $NF_bam_files_path -t ${tumour_bam} -o ${tumour_bam.baseName}.NF_msisensor
     """
 }
 
