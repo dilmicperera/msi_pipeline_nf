@@ -38,13 +38,15 @@ bai_files = Channel.fromPath("$bam_folder/DNA*/DNA*[0-9].hardclipped.bam.bai")
 //NF_bai_path = Paths.get(bam_folder,"/QMRS*/NF*[0-9].hardclipped.bam.bai")
 //NF_normal_bai = file(NF_bai_path)
 
-NF_normal_bam = "QMRS*/NF*[0-9].hardclipped.bam"
+NF_normal_bam = file("${bam_folder}/QMRS*/NF*2.hardclipped.bam")
+NF_normal_bam_2 = file("${bam_folder}/QMRS*/NF*2.hardclipped.bam")
 
 NF_bam_path = "${bam_folder}/QMRS*/NF*2.hardclipped.bam"
 
-NF_normal_bai = "QMRS*/NF*[0-9].hardclipped.bam.bai"
-NF_bai_path = "${bam_folder}/QMRS*/NF*2.hardclipped.bam.bai"
 
+NF_bai_path = "${bam_folder}/QMRS*/NF*2.hardclipped.bam.bai"
+NF_normal_bai = file("${bam_folder}/QMRS*/NF*2.hardclipped.bam.bai")
+NF_normal_bai_2 = file("${bam_folder}/QMRS*/NF*2.hardclipped.bam.bai")
 
 
 // The bam and bai files are used by both callers, so we split the channel into two:
@@ -84,8 +86,8 @@ process run_mantis_NF{
     input:
         file tumour_bam from bam_files_NF_mantis
         file tumour_bai from bai_files_NF_mantis
-        path NF_bam_path
-        path NF_bai_path
+        file NF_normal_bam
+        file NF_normal_bai
         file genome_NF_fa
         file genome_NF_fa_fai
         path loci_file_mantis
@@ -93,7 +95,7 @@ process run_mantis_NF{
         file "${tumour_bam.baseName}.NF_mantis.status" into NF_mantis_outputs
 
     """
-    python /opt/mantis/mantis.py --bedfile $loci_file_mantis --genome $genome_NF_fa -n $NF_bam_path -t ${tumour_bam} -o ${tumour_bam.baseName}.NF_mantis
+    python /opt/mantis/mantis.py --bedfile $loci_file_mantis --genome $genome_NF_fa -n $NF_normal_bam -t ${tumour_bam} -o ${tumour_bam.baseName}.NF_mantis
     """
 }
 
@@ -130,15 +132,15 @@ process run_msisensor_NF{
     input:
         file tumour_bam from bam_files_NF_msisensor
         file tumour_bai from bai_files_NF_msisensor
-        path pooled_normal_bam
-        path pooled_normal_bai
+        file NF_normal_bam_2
+        file NF_normal_bai_2
         path loci_file_msisensor
     output:
         file "${tumour_bam.baseName}.NF_msisensor" into NF_msisensor_outputs
 
 
     """
-    msisensor msi -d $loci_file_msisensor -n $pooled_normal_bam -t ${tumour_bam} -o ${tumour_bam.baseName}.NF_msisensor
+    msisensor msi -d $loci_file_msisensor -n $NF_normal_bam_2 -t ${tumour_bam} -o ${tumour_bam.baseName}.NF_msisensor
     """
 }
 
